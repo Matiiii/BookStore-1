@@ -8,11 +8,11 @@ import pl.jstk.enumerations.BookStatus;
 
 @Entity
 @Table(name = "BOOK")
-@TableGenerator(name="tab", initialValue=5, allocationSize=50)
+
 public class BookEntity implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE, generator="tab")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false, length = 50)
 	private String title;

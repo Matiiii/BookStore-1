@@ -10,12 +10,15 @@
 <section>
     <div class="jumbotron">
         <div class="container">
-            <h1>Error</h1>
-            <!--<p>This page contains all informations about books</p>-->
-            <p th:text="${message}" />
-            <!--<tr th:each="m : ${message}">
-                <p th:text="${m.text}"></p>
-            </tr>-->
+            <div th:switch="${status}">
+                <p th:case="'403'">Not allowed action. You must login as admin.</p>
+                <p th:case="'404'">Bad request. Not found content.</p>
+                <p th:case="'500'"> Not allowed action. <em th:text="${message}"/> </p>
+            </div>
+            <!--<h1> <small th:text="${timestamp}"/> </h1>-->
+            <br>
+            <!--<p>Bad request: <i th:text="${error}"/> <small th:text="${status}"/></p>-->
+
         </div>
     </div>
 </section>

@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import pl.jstk.constants.ModelConstants;
 import pl.jstk.constants.ViewNames;
@@ -29,7 +30,6 @@ public class BookControler {
     @GetMapping("/books")
     public String getAllBooks(Model model){
         MessageTo messageTo = new MessageTo(INFO);
-        model.addAttribute("message",INFO);
         model.addAttribute("bookList", bookService.findAllBooks());
         return ViewNames.BOOKS;
     }
@@ -60,43 +60,14 @@ public class BookControler {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/books/delete")
-//    public ModelAndView deleteBookForAdmin(@RequestParam long id){
-//
-//        bookService.deleteBook(id);
-//        ModelAndView mv = new ModelAndView("redirect:/books");
-//        MessageTo messageTo = new MessageTo("Book is deleted");
-//        mv.addObject("message",  messageTo);
-//        mv.addObject("bookList",bookService.findAllBooks());
-//        //redirectAttributes.addFlashAttribute(ModelConstants.INFO,  "Book is deleted");
-//        return mv;
-//
-//    }
-    public RedirectView deleteBookForAdmin(@RequestParam long id, Model model){
+    public String deleteBookForAdmin(@RequestParam long id, RedirectAttributes ra){
 
         bookService.deleteBook(id);
-        model.addAttribute("bookList",bookService.findAllBooks() );
-        //MessageTo messageTo = new MessageTo("Book is deleted");
-        model.addAttribute("message",  "Book is deleted");
+        ra.addFlashAttribute("bookList",bookService.findAllBooks() );
+        ra.addFlashAttribute("message",  "Book is deleted");
 
-        //ModelAndView modelAndView = new ModelAndView("redirect:" + "");
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("/books");
-        //redirectView.setExposeModelAttributes(false);
-        return redirectView;
-        //return "redirect:/books";
+        return "redirect:/" + ViewNames.BOOKS;
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public String handleAccessDeniedException(Model model) {
-        //MessageTo messageTo = new MessageTo("Not allowed action. You must login as admin");
-        model.addAttribute("message", "Not allowed action. You must login as admin" );
-        return ViewNames.ERROR;
-    }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public String handleNotFoundException(Model model){
-        //MessageTo messageTo = new MessageTo("Content wasn't found");
-        model.addAttribute("message", "Content wasn't found" );
-        return ViewNames.ERROR;
-    }
 }

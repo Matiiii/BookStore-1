@@ -5,6 +5,7 @@ package pl.jstk.service.impl;
 import java.util.List;
 
 import pl.jstk.entity.BookEntity;
+import pl.jstk.enumerations.BookStatus;
 import pl.jstk.mapper.BookMapper;
 import pl.jstk.repository.BookRepository;
 import pl.jstk.service.BookService;
@@ -41,8 +42,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookTo> findBooksByAllFields(String author, String title) {
-        return BookMapper.map2To(bookRepository.findBookByAllFields(author, title));
+    public List<BookTo> findBooksByAllFields(String author, String title, BookStatus status) {
+        return BookMapper.map2To(bookRepository.findBookByAllFields(author, title, status));
     }
 
     @Override

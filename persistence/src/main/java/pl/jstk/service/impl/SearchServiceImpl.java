@@ -24,7 +24,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<BookTo> findAllBooks(BookTo bookTo) {
 
-        return bookService.findBooksByAllFields(bookTo.getAuthors(), bookTo.getTitle());
+        return bookService.findBooksByAllFields(bookTo.getAuthors(), bookTo.getTitle(), bookTo.getStatus());
 
     }
 }
