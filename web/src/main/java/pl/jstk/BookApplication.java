@@ -9,10 +9,12 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"pl"})
 @EntityScan(basePackages = {"pl"})
+@EnableGlobalMethodSecurity(securedEnabled = true)
 @ComponentScan(basePackages = {"pl"})
 public class BookApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {

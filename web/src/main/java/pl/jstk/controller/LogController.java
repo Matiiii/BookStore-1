@@ -18,10 +18,15 @@ public class LogController {
         return ViewNames.LOGIN;
     }
 
+    @GetMapping(value = "/loginError")
+    public String loginError(Model model) {
+        model.addAttribute("error", true);
+        return ViewNames.LOGIN;
+    }
+
     @PostMapping(value = "/login")
     public String login(Model model) {
         model.addAttribute(ModelConstants.INFO,INFO_TEXT);
         return ViewNames.WELCOME;
     }
-
 }

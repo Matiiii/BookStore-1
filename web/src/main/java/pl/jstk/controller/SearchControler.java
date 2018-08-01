@@ -10,7 +10,7 @@ import pl.jstk.constants.ViewNames;
 import pl.jstk.service.SearchService;
 import pl.jstk.to.BookTo;
 
-@Controller
+@Controller("search")
 public class SearchControler {
 
     @Autowired

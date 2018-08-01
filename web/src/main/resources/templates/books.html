@@ -11,7 +11,11 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Books</h1>
-            <p>This page contains all informations about books</p>
+            <!--<p>This page contains all informations about books</p>-->
+            <p th:text="${message}" />
+            <!--<tr th:each="m : ${message}">
+                <p th:text="${m.text}"></p>
+            </tr>-->
         </div>
     </div>
 </section>
@@ -28,9 +32,17 @@
                         <p th:text="${book.status}">Status: </p>
                         <p>
                             <a th:href="@{'/books/book?id='+${book.id}}"
-                               class="btn btn-primary"> <span
-                                    class="glyphicon-info-sign glyphicon"/></span> Details
+                               class="btn btn-primary">
+                                <span
+                                    class="glyphicon-info-sign glyphicon"/>
+                                </span> Details
                             </a>
+                        </p>
+                        <p>
+
+                        <form target="_self" action="#" th:action="@{'/books/delete?id='+${book.id}}" method="post">
+                            <input type="submit" value="Delete" id="btnDelete" class="btn btn-primary" />
+                        </form>
                         </p>
 
                     </div>
