@@ -49,6 +49,7 @@ public class BookControler {
         return ViewNames.NEW_BOOK;
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/greeting")
     public String addBook(@ModelAttribute("newBook") BookTo newBook, Model model) {
 

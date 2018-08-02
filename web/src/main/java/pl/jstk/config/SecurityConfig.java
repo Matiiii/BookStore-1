@@ -1,11 +1,14 @@
 package pl.jstk.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -19,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
-                .antMatchers("/", "/books", "/books/", "/books/add*", "/search", "/webjars/**", "/img/*", "/css/*", "/books/delete*").permitAll()
+                .antMatchers("/", "/books", "/books/book?id={\\d+}", "/search", "/webjars/**", "/img/*", "/css/*").permitAll()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .failureUrl("/loginError")
@@ -32,14 +35,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+      /*  auth.inMemoryAuthentication()
                 .withUser("admin").password("{noop}admin").roles("ADMIN")
                 .and()
-                .withUser("user1").password("{noop}user1").roles("USER");
+                .withUser("user1").password("{noop}user1").roles("USER");*/
 
-        /*auth.jdbcAuthentication().dataSource(dataSource)
-        .usersByUsernameQuery("select username,password, enabled from UserEntity where username=?")
-                .authoritiesByUsernameQuery("select username, role from user_roles where username=?");*/
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select user_name,password, enabled from USER where user_name=?")
+                .authoritiesByUsernameQuery("select user_name,role from USER where user_name=?");
+    }
+
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

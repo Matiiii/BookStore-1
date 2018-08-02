@@ -44,18 +44,18 @@ public class LogControllerTest {
         // then
         resultActions.andExpect(status().isOk())
                 .andExpect(view().name(ViewNames.WELCOME))
-            .andExpect(model().attribute("info",LOGGED));
+                .andExpect(model().attribute("info", LOGGED));
 
     }
 
     @Test
     public void shouldReturnStatusOkWhenLogedAsAdmin() throws Exception {
 
-            // when
+        // when
         ResultActions resultActions = mockMvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("username", "admin")
-                .param("password", "admin"));
+                .param("password", "123"));
         // then
         resultActions.andExpect(status().isOk());
 
@@ -67,8 +67,8 @@ public class LogControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(post("/login")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("username", "user1")
-                .param("password", "user1"));
+                .param("username", "user")
+                .param("password", "123"));
         // then
         resultActions.andExpect(status().isOk());
 
@@ -84,7 +84,7 @@ public class LogControllerTest {
                 .param("password", "user1"));
         // then
         resultActions.andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"+ViewNames.LOGIN_ERROR));
+                .andExpect(redirectedUrl("/" + ViewNames.LOGIN_ERROR));
 
     }
 
@@ -95,7 +95,7 @@ public class LogControllerTest {
         ResultActions resultActions = mockMvc.perform(get("/loginError"));
         // then
         resultActions.andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"+ViewNames.LOGIN));
+                .andExpect(redirectedUrl("/" + ViewNames.LOGIN));
 
     }
 

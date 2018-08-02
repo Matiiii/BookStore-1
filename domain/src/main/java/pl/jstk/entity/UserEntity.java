@@ -16,28 +16,32 @@ public class UserEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(nullable = false, length = 50)
+	@Column(name = "user_name", nullable = false, length = 50)
 	private String userName;
 	@Column(nullable = false, length = 200)
 	private String password;
 	@Column(nullable = false)
 	private int enabled;
+	@Column(nullable = false, length = 20)
+	private String role;
 
 	// for hibernate
 	protected UserEntity() {
 	}
 
-	public UserEntity(Long id, String user, String password) {
+	public UserEntity(Long id, String user, String password, String role) {
 		this.id = id;
 		this.userName = user;
 		this.password = password;
+		this.role = role;
 		this.enabled = 1;
 	}
-	public UserEntity(Long id, String user, String password, int enabled) {
+	public UserEntity(Long id, String user, String password, int enabled, String role) {
 		this.id = id;
 		this.userName = user;
 		this.password = password;
 		this.enabled = enabled;
+		this.role = role;
 	}
 
 	public Long getId() {
@@ -67,4 +71,8 @@ public class UserEntity implements Serializable {
 	public int getEnabled() {return enabled;}
 
 	public void setEnabled(int enabled) {this.enabled = enabled;}
+
+	public String getRole() {return role; }
+
+	public void setRole(String role) {this.role = role;	}
 }

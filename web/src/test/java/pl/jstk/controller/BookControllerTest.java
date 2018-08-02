@@ -109,6 +109,7 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
     public void schouldReturnWelcomeViewAfterAdd() throws Exception {
         //given when
         BookTo bookTo = new BookTo(null, "title", "author", BookStatus.FREE);
