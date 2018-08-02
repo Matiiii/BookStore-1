@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.jstk.constants.ModelConstants;
 import pl.jstk.constants.ViewNames;
@@ -24,6 +27,7 @@ public class BookControler {
 
     /**
      * This method returns view books and injects all books into it
+     *
      * @param model - this model accpets list of dto for all books
      * @return view for all books
      */
@@ -35,8 +39,9 @@ public class BookControler {
 
     /**
      * This method returns view for one a book which id is given by url
+     *
      * @param model - this model accepts dto for a book
-     * @param id - book's id
+     * @param id    - book's id
      * @return view for one a book
      */
     @GetMapping("/books/book")
@@ -53,6 +58,7 @@ public class BookControler {
 
     /**
      * This method redirect to page with form to input data of new book
+     *
      * @param newBook - dto new book
      * @return view with form to add new book
      */
@@ -65,8 +71,9 @@ public class BookControler {
     /**
      * This method redirect to home page after add new book.
      * This method can be execute when user has admin role.
+     *
      * @param newBook - dto with new book
-     * @param model - this model accepts welcome message and info that book was added
+     * @param model   - this model accepts welcome message and info that book was added
      * @return view with home page
      */
     @Secured("ROLE_ADMIN")
@@ -83,6 +90,7 @@ public class BookControler {
     /**
      * This method redirect to page with all books when a book was deleted.
      * This method can be execute when user has admin role
+     *
      * @param id - book's id to delete
      * @param ra - redirecct attributes which allow to transfer info that book is deleted to books view.
      * @return - redirect to view of all books

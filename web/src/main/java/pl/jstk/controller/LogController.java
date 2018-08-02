@@ -16,6 +16,7 @@ public class LogController {
 
     /**
      * This method redirects to a page with a form to login.
+     *
      * @return view for login
      */
     @GetMapping(value = "/login")
@@ -26,6 +27,7 @@ public class LogController {
 
     /**
      * This method redirects to a page with a form to login after incorrect login
+     *
      * @param ra - redirect attributes enables transfer info about wrong login to view
      * @return redirect to page with login form
      */
@@ -37,6 +39,7 @@ public class LogController {
 
     /**
      * This method redirect to home page after success login
+     *
      * @param model - this model accpets info about successfully login
      * @return view tih home page
      */

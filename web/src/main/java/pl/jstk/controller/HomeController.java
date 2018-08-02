@@ -12,10 +12,15 @@ public class HomeController {
 
     protected static final String WELCOME = "This is a welcome page";
 
+    /**
+     * This method redirect to view wtih home page
+     *
+     * @param model - this model accepts a welcome message
+     * @return view tih home page
+     */
     @GetMapping(value = "/")
     public String welcome(Model model) {
         model.addAttribute(ModelConstants.MESSAGE, WELCOME);
-        //model.addAttribute(ModelConstants.INFO, INFO_TEXT);
         return ViewNames.WELCOME;
     }
 
