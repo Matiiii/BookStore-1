@@ -1,23 +1,21 @@
 package pl.jstk.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import pl.jstk.constants.ModelConstants;
 import pl.jstk.constants.ViewNames;
 import pl.jstk.exception.ResourceNotFoundException;
 import pl.jstk.service.BookService;
 import pl.jstk.to.BookTo;
-import pl.jstk.to.MessageTo;
 
-@Controller("/books")
+@Controller()
 public class BookControler {
     @Autowired
     BookService bookService;
@@ -28,43 +26,46 @@ public class BookControler {
     protected static final String INFO = "This page contains all informations about books";
 
     @GetMapping("/books")
-    public String getAllBooks(Model model){
-        MessageTo messageTo = new MessageTo(INFO);
+    public String getAllBooks(Model model) {
         model.addAttribute("bookList", bookService.findAllBooks());
         return ViewNames.BOOKS;
     }
 
     @GetMapping("/books/book")
-    public String getBook(Model model, @RequestParam long id){
+    public String getBook(Model model, @RequestParam long id) {
         BookTo book = bookService.findBookById(id);
-        model.addAttribute("book", book );
+        if (book != null) {
+            model.addAttribute("book", book);
+        } else {
+            throw new ResourceNotFoundException();
+        }
 
-        return ViewNames.BOOK ;
+        return ViewNames.BOOK;
     }
 
     @GetMapping("/books/add")
-    public String showFormAddBook(@ModelAttribute("newBook") BookTo newBook, Model model){
+    public String showFormAddBook(@ModelAttribute("newBook") BookTo newBook, Model model) {
 
-        return ViewNames.NEW_BOOK ;
+        return ViewNames.NEW_BOOK;
     }
 
     @PostMapping("/greeting")
-    public String addBook(@ModelAttribute("newBook") BookTo newBook, Model model){
+    public String addBook(@ModelAttribute("newBook") BookTo newBook, Model model) {
 
-        BookTo book = bookService.saveBook(newBook);
-        model.addAttribute(ModelConstants.MESSAGE, WELCOME );
-        model.addAttribute(ModelConstants.INFO, INFO_ADD_TEXT );
+        bookService.saveBook(newBook);
+        model.addAttribute(ModelConstants.MESSAGE, WELCOME);
+        model.addAttribute(ModelConstants.INFO, INFO_ADD_TEXT);
 
-        return ViewNames.WELCOME ;
+        return ViewNames.WELCOME;
     }
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/books/delete")
-    public String deleteBookForAdmin(@RequestParam long id, RedirectAttributes ra){
+    public String deleteBookForAdmin(@RequestParam long id, RedirectAttributes ra) {
 
         bookService.deleteBook(id);
-        ra.addFlashAttribute("bookList",bookService.findAllBooks() );
-        ra.addFlashAttribute("message",  "Book is deleted");
+        ra.addFlashAttribute("bookList", bookService.findAllBooks());
+        ra.addFlashAttribute("message", "Book is deleted");
 
         return "redirect:/" + ViewNames.BOOKS;
     }

@@ -20,6 +20,8 @@ public class UserEntity implements Serializable {
 	private String userName;
 	@Column(nullable = false, length = 200)
 	private String password;
+	@Column(nullable = false)
+	private int enabled;
 
 	// for hibernate
 	protected UserEntity() {
@@ -29,6 +31,13 @@ public class UserEntity implements Serializable {
 		this.id = id;
 		this.userName = user;
 		this.password = password;
+		this.enabled = 1;
+	}
+	public UserEntity(Long id, String user, String password, int enabled) {
+		this.id = id;
+		this.userName = user;
+		this.password = password;
+		this.enabled = enabled;
 	}
 
 	public Long getId() {
@@ -54,4 +63,8 @@ public class UserEntity implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public int getEnabled() {return enabled;}
+
+	public void setEnabled(int enabled) {this.enabled = enabled;}
 }

@@ -10,25 +10,24 @@ import pl.jstk.constants.ViewNames;
 import pl.jstk.service.SearchService;
 import pl.jstk.to.BookTo;
 
-@Controller("search")
-public class SearchControler {
+@Controller()
+public class SearchController {
 
     @Autowired
     SearchService searchService;
 
 
     @GetMapping("/search")
-    public String searchBooks(@ModelAttribute("searchBook") BookTo searchBook, Model model){
+    public String searchBooks(@ModelAttribute("searchBook") BookTo searchBook, Model model) {
 
-        return ViewNames.SEARCH ;
+        return ViewNames.SEARCH;
     }
 
     @PostMapping("/search")
-    public String getBooks(@ModelAttribute("searchBook") BookTo searchBook, Model model){
-        System.out.println("SIZE: " + searchService.findAllBooks(searchBook).size());
+    public String getBooks(@ModelAttribute("searchBook") BookTo searchBook, Model model) {
         model.addAttribute("bookList", searchService.findAllBooks(searchBook));
 
-        return ViewNames.SEARCHED ;
+        return ViewNames.SEARCHED;
     }
 
 

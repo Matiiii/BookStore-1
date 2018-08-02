@@ -10,7 +10,7 @@ public final class ViewNames implements Serializable {
 	public static final String ERROR = "error1";
 	public static final String NEW_BOOK= "addBook";
 	public static final String LOGIN = "login";
-	public static final String LOGIN_ERROR = "login";
+	public static final String LOGIN_ERROR = "loginError";
 	public static final String SEARCH = "search";
 	public static final String SEARCHED = "searchWithBooks";
 	public static final String WELCOME = "welcome";

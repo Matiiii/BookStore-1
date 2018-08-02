@@ -13,7 +13,9 @@
             <div th:switch="${status}">
                 <p th:case="'403'">Not allowed action. You must login as admin.</p>
                 <p th:case="'404'">Bad request. Not found content.</p>
+                <p th:case="'405'">Not allowed action. You must login as admin.</p>
                 <p th:case="'500'"> Not allowed action. <em th:text="${message}"/> </p>
+                <p th:case="*"><i th:text="${error}"/></p>
             </div>
             <!--<h1> <small th:text="${timestamp}"/> </h1>-->
             <br>
