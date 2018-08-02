@@ -26,6 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    /**
+     * This method set of authorize request
+     * @param httpSecurity this param enables set which page is available fro everyone and which page not
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
@@ -41,6 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().frameOptions().disable();
     }
 
+    /**
+     * This method enables get data to log from memory
+     * @param auth - param which allows set authenticate
+     * @throws Exception
+     */
     @Autowired
     public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
@@ -48,8 +58,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("user1").password("{noop}user1").roles("USER");
 
-      
+
     }
+
+    /**
+     * This method enables get data to log from database
+     * @param auth - param which allows set authenticate
+     * @throws Exception
+     */
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -59,6 +75,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select user_name,role from USER where user_name=?");
     }
 
+    /**
+     * This method encoded secure passwords
+     * @return BCryptPasswordEncoder
+     */
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

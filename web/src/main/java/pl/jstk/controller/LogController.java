@@ -14,18 +14,32 @@ public class LogController {
     private static final String INFO_TEXT = "You are logged";
     protected static final String WELCOME = "This is a welcome page";
 
+    /**
+     * This method redirects to a page with a form to login.
+     * @return view for login
+     */
     @GetMapping(value = "/login")
     public String login() {
 
         return ViewNames.LOGIN;
     }
 
+    /**
+     * This method redirects to a page with a form to login after incorrect login
+     * @param ra - redirect attributes enables transfer info about wrong login to view
+     * @return redirect to page with login form
+     */
     @GetMapping(value = "/loginError")
     public String loginError(RedirectAttributes ra) {
         ra.addFlashAttribute("error", true);
         return "redirect:/" + ViewNames.LOGIN;
     }
 
+    /**
+     * This method redirect to home page after success login
+     * @param model - this model accpets info about successfully login
+     * @return view tih home page
+     */
     @PostMapping(value = "/loginSuccess")
     public String loginSuccess(Model model) {
         model.addAttribute(ModelConstants.MESSAGE, WELCOME);
